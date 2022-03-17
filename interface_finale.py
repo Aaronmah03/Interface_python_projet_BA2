@@ -16,7 +16,6 @@ list_bonus = ['Polytech','carapils','cara_5000','Pendu','Stickman de Vitruve']
 
 
 def enhaut(a):
-    neg=0
     if a=='B' or a=='H':
         neg=1
     else :
@@ -28,10 +27,7 @@ def cote(a):
     else :
         neg=1
     return neg
-def B(a):
-    if a=='B_1':
-        pas=100
-    return pas
+figures = []
 def recentrerxC(a):
     if a=='C':
         b=150
@@ -110,8 +106,8 @@ def distance(p_1,p_2):
     z=m.sqrt((float(p_2[0])-float(p_1[0]))**2+(float(p_2[1])-float(p_1[1]))**2)
     return z
  ## créer la matrice
-def ouverture(a):
-    x, y = np.loadtxt('csv_projet/'+a+'.csv', delimiter=',', unpack=True)  ## créer la matrice
+def ouverture(fichier):
+    x, y = np.loadtxt('csv_projet/'+fichier+'.csv', delimiter=',', unpack=True)  ## créer la matrice
     x_1 = []
     y_1 = []
     x_y = x_1
@@ -152,7 +148,9 @@ def ouverture(a):
         pos_modifx = float(x_y[k][0])
         pos_modify = float(x_y[k][1])
         pos_corrx = pos_modifx - pos_x
-        pos_corry = -(pos_modify - pos_y) - 200
+        pos_corry = enhaut(fichier) * (pos_modify - pos_y) - 200
+        print(fichier)
+        print(enhaut(fichier))
         x_y1.append((str(pos_corrx), str(pos_corry), x_y[k][2]))
     figures=x_y1
     t.hideturtle()
@@ -170,10 +168,10 @@ def ouverture(a):
     t.up()
     t.goto(float(figures[0][0]), float(figures[0][1]))
     t.showturtle()
+    t.speed(10)
     for i in range(len(figures)):
         if figures[i][2] == '0':
             t.color('black')
-            t.speed(0)
             t.down()
             t.goto(float(figures[i][0]), float(figures[i][1]))
         if figures[i][2] == '1':
@@ -299,7 +297,6 @@ def tracemot(i):
             somme += 1
             for i in range(len(x_y11)):
                 figure.append((x_y11[i][0], x_y11[i][1], x_y11[i][2]))
-    figures = []
     for i in range(len(figure)):
         bouge = float(figure[i][0]) - somme * 100
         figures.append((str(bouge), figure[i][1], figure[i][2]))
@@ -321,7 +318,7 @@ def tracemot(i):
     for i in range(len(figures)):
         if figures[i][2] == '0':
             t.color('black')
-            t.speed(0)
+            t.speed(10)
             t.down()
             t.goto(float(figures[i][0]), float(figures[i][1]))
         if figures[i][2] == '1':
@@ -394,6 +391,9 @@ root.mainloop()
 
 
 
+
+
+
 # Importing Libraries
 
 import serial
@@ -423,6 +423,10 @@ for i in range(len(L)):
         value = write_read(L[i][0])
         value2 = write_read(L[i][1])
         value3 = write_read(L[i][2])
+
+
+
+
 
 
 
