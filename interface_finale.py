@@ -11,9 +11,14 @@ from tkinter import ttk
 # Dico Lettres
 list_lettres = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
 list_formes = ['Cercle','Triangle','Carré','Pentagone','Hexagone']
-list_bonus = ['Polytech','carapils','cara_5000','Pendu','Stickman de Vitruve']
+list_bonus = ['Polytech','carapils','Pendu','Stickman de Vitruve']
 
 
+coo_tableau=[]
+#1 pixel (X) = 0,264583333333334 millimètre [mm]
+def convert(a):
+    b=1/0.264583333333334*a
+    return b
 
 def enhaut(a):
     if a=='B' or a=='H':
@@ -21,13 +26,19 @@ def enhaut(a):
     else :
         neg=-1
     return neg
+def inversenhaut(a):
+    if a=='B' or a=='H':
+        neg=-1
+    else :
+        neg=1
+    return neg
 def cote(a):
     if a=='V':
         neg=1
     else :
         neg=1
     return neg
-figures = []
+
 def recentrerxC(a):
     if a=='C':
         b=150
@@ -57,7 +68,7 @@ def recentrerxC(a):
 def recentreryC(a):
     if a=='C':
         b=80
-    elif a=='D':
+    elif a=='D' :
         b=130
     elif a=='G' or a=='S':
         b=120
@@ -149,10 +160,14 @@ def ouverture(fichier):
         pos_modify = float(x_y[k][1])
         pos_corrx = pos_modifx - pos_x
         pos_corry = enhaut(fichier) * (pos_modify - pos_y) - 200
-        print(fichier)
-        print(enhaut(fichier))
         x_y1.append((str(pos_corrx), str(pos_corry), x_y[k][2]))
     figures=x_y1
+    for k in range(len(figures)):
+        pos_corrx1 = float(figures[k][0])
+        pos_corry1 = float(figures[k][1])
+        coo_tableaux=(pos_corrx1+convert(600))
+        coo_tableauy= inversenhaut(fichier)*(pos_corry1+convert(600))+200
+        coo_tableau.append((str(coo_tableaux), str(coo_tableauy), figures[k][2]))
     t.hideturtle()
     t.up()
     t.goto(-320, 300)
@@ -297,9 +312,16 @@ def tracemot(i):
             somme += 1
             for i in range(len(x_y11)):
                 figure.append((x_y11[i][0], x_y11[i][1], x_y11[i][2]))
+    figures = []
     for i in range(len(figure)):
         bouge = float(figure[i][0]) - somme * 100
         figures.append((str(bouge), figure[i][1], figure[i][2]))
+    for k in range(len(figures)):
+        pos_corrx1 = float(figures[k][0])
+        pos_corry1 = float(figures[k][1])
+        coo_tableaux=(pos_corrx1+convert(600))
+        coo_tableauy= -(pos_corry1+convert(600))+200
+        coo_tableau.append((str(coo_tableaux), str(coo_tableauy), figures[k][2]))
     t.hideturtle()
     t.up()
     t.goto(-300,300)
@@ -393,12 +415,11 @@ root.mainloop()
 
 
 
-
 # Importing Libraries
 
 import serial
 import time
-L=figures
+L=coo_tableau
 arduino = serial.Serial(port='/dev/cu.usbmodem14101', baudrate=9600, timeout=.1)
 def write_read(x):
     #arduino.write(str(x).encode())
@@ -423,10 +444,6 @@ for i in range(len(L)):
         value = write_read(L[i][0])
         value2 = write_read(L[i][1])
         value3 = write_read(L[i][2])
-
-
-
-
 
 
 
