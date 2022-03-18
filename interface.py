@@ -162,6 +162,12 @@ def ouverture(fichier):
         pos_corry = enhaut(fichier) * (pos_modify - pos_y) - 200
         x_y1.append((str(pos_corrx), str(pos_corry), x_y[k][2]))
     figures=x_y1
+    for k in range(len(figures)):
+        pos_corrx1 = float(figures[k][0])
+        pos_corry1 = float(figures[k][1])
+        coo_tableaux=(pos_corrx1+convert(600))
+        coo_tableauy= inversenhaut(fichier)*(pos_corry1+convert(600))+200
+        coo_tableau.append((str(coo_tableaux), str(coo_tableauy), figures[k][2]))
     t.hideturtle()
     t.up()
     t.goto(-320, 300)
@@ -189,13 +195,6 @@ def ouverture(fichier):
             t.goto(float(figures[i][0]), float(figures[i][1]))
             t.color('red')
     t.done()
-
-    for k in range(len(figures)):
-        pos_corrx1 = float(figures[k][0])
-        pos_corry1 = float(figures[k][1])
-        coo_tableaux=(pos_corrx1+convert(600))
-        coo_tableauy= inversenhaut(fichier)*(pos_corry1+convert(600))+200
-        coo_tableau.append((str(coo_tableaux), str(coo_tableauy), figures[k][2]))
 def exit(place):
     exit_button = ttk.Button(
         place,
@@ -317,7 +316,12 @@ def tracemot(i):
     for i in range(len(figure)):
         bouge = float(figure[i][0]) - somme * 100
         figures.append((str(bouge), figure[i][1], figure[i][2]))
-
+    for k in range(len(figures)):
+        pos_corrx1 = float(figures[k][0])
+        pos_corry1 = float(figures[k][1])
+        coo_tableaux=(pos_corrx1+convert(600))
+        coo_tableauy= -(pos_corry1+convert(600))+200
+        coo_tableau.append((str(coo_tableaux), str(coo_tableauy), figures[k][2]))
     t.hideturtle()
     t.up()
     t.goto(-300,300)
@@ -345,12 +349,6 @@ def tracemot(i):
             t.goto(float(figures[i][0]), float(figures[i][1]))
             t.color('red')
     t.done()
-    for k in range(len(figures)):
-        pos_corrx1 = float(figures[k][0])
-        pos_corry1 = float(figures[k][1])
-        coo_tableaux=(pos_corrx1+convert(600))
-        coo_tableauy= -(pos_corry1+convert(600))+200
-        coo_tableau.append((str(coo_tableaux), str(coo_tableauy), figures[k][2]))
 '''
 Main code
 '''
